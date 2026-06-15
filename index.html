@@ -11,18 +11,19 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:      #F8FAFC;
-    --bg2:     #EFF4FB;
-    --indigo:  #4F46E5;
-    --indigo2: #6366F1;
-    --cyan:    #0891B2;
-    --green:   #059669;
-    --text:    #0F172A;
-    --muted:   #64748B;
-    --border:  rgba(15,23,42,0.10);
-    --glass:   rgba(255,255,255,0.85);
-    --glass2:  rgba(79,70,229,0.07);
-    --shadow:  0 2px 20px rgba(15,23,42,0.07);
+    --bg:      #F7F8FC;
+    --bg2:     #EEF1F8;
+    --indigo:  #4338CA;
+    --indigo2: #6D28D9;
+    --cyan:    #0E7490;
+    --green:   #047857;
+    --amber:   #D97706;
+    --text:    #0C1229;
+    --muted:   #5B6A8A;
+    --border:  rgba(12,18,41,0.10);
+    --glass:   rgba(255,255,255,0.88);
+    --glass2:  rgba(67,56,202,0.07);
+    --shadow:  0 2px 20px rgba(12,18,41,0.08);
     --r:       14px;
   }
 
@@ -397,15 +398,40 @@
   .project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
 
   /* App logo */
+  .project-logo-wrap {
+    width: 56px; height: 56px; border-radius: 14px;
+    overflow: hidden; flex-shrink: 0;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 10px rgba(12,18,41,0.10);
+    background: var(--bg2);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .project-logo-wrap img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
   .project-logo {
     width: 56px; height: 56px; border-radius: 14px; object-fit: cover;
-    flex-shrink: 0; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(15,23,42,0.09);
+    flex-shrink: 0; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(12,18,41,0.10);
   }
   .project-logo-fallback {
     width: 56px; height: 56px; border-radius: 14px;
     display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-    flex-shrink: 0; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(15,23,42,0.09);
+    flex-shrink: 0; border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(12,18,41,0.10);
   }
+  /* Read More Button */
+  .read-more-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 1.25rem; padding: 0.48rem 1.1rem;
+    background: transparent;
+    border: 1.5px solid var(--indigo2);
+    color: var(--indigo2); border-radius: 8px;
+    font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .read-more-btn .rm-arrow { transition: transform 0.25s ease; display: inline-block; }
+  .read-more-btn:hover { background: var(--indigo2); color: #fff; }
+  .read-more-btn:hover .rm-arrow { transform: translateX(4px); }
   .project-company { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--cyan); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
   .project-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.15rem; line-height: 1.2; margin-bottom: 0.75rem; color: var(--text); }
   .project-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.7; margin-bottom: 1.25rem; }
@@ -543,6 +569,89 @@
     section { padding: 5rem 5vw; }
     nav { padding: 0 5vw; }
     .hero-name { font-size: 2.2rem; }
+  }
+
+  /* ── MODAL OVERLAY ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(12,18,41,0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal-panel {
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: min(640px, 100vw);
+    background: var(--bg);
+    box-shadow: -16px 0 64px rgba(12,18,41,0.18);
+    overflow-y: auto; z-index: 1001;
+    transform: translateX(100%);
+    transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 2.5rem 2.5rem 3rem;
+  }
+  .modal-overlay.open .modal-panel { transform: translateX(0); }
+
+  .modal-close {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1.5px solid var(--border); background: var(--bg2);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: var(--muted); transition: all 0.2s ease;
+    line-height: 1;
+  }
+  .modal-close:hover { background: var(--text); color: #fff; border-color: var(--text); }
+
+  .modal-header {
+    display: flex; align-items: flex-start; gap: 1.25rem;
+    margin-bottom: 2rem; padding-right: 3rem;
+  }
+  .modal-logo-wrap {
+    width: 72px; height: 72px; border-radius: 18px;
+    overflow: hidden; flex-shrink: 0;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 16px rgba(12,18,41,0.12);
+    background: var(--bg2);
+  }
+  .modal-logo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .modal-logo-fallback {
+    width: 72px; height: 72px; border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.1rem; flex-shrink: 0;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 16px rgba(12,18,41,0.08);
+  }
+  .modal-company {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+    color: var(--cyan); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem;
+  }
+  .modal-title {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    font-size: 1.35rem; color: var(--text); line-height: 1.25;
+  }
+  .modal-section-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    color: var(--cyan); text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 0.75rem; margin-top: 1.75rem;
+    padding-bottom: 0.5rem; border-bottom: 1px solid var(--border);
+  }
+  .modal-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.85; }
+  .modal-bullets { list-style: none; padding: 0; }
+  .modal-bullets li {
+    color: var(--muted); font-size: 0.875rem; line-height: 1.72;
+    padding-left: 1.3rem; position: relative; margin-bottom: 0.65rem;
+  }
+  .modal-bullets li::before {
+    content: '▸'; position: absolute; left: 0;
+    color: var(--indigo2); font-size: 0.75rem; top: 0.22rem;
+  }
+  .modal-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .modal-links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+  @media (max-width: 640px) {
+    .modal-panel { padding: 2rem 1.25rem 3rem; }
+    .modal-title { font-size: 1.15rem; }
   }
 </style>
 </head>
@@ -733,23 +842,23 @@
         <div class="timeline-dot"></div>
         <div class="timeline-date">AUG 2025 — PRESENT</div>
         <div class="timeline-title">Flutter Developer</div>
-        <div class="timeline-company">Nyota — Remote (GCC / Egypt)</div>
+        <div class="timeline-company">Nyota — Back Office of Saudi Company &middot; Onsite &amp; Remote</div>
         <ul class="timeline-desc">
           <li>Building and maintaining enterprise Flutter apps for GCC markets: Tie Driver (fleet telematics) and Manpower (event staffing), both live on App Store and Google Play.</li>
-          <li>Implemented offline-first attendance sync engines, real-time GPS telematics with Traccar API, and geofenced check-in/out systems using WKT polygon verification.</li>
-          <li>Built multi-tenant dynamic URL configuration, RTL/LTR localization (AR/EN), and OTA updates via Shorebird across both apps.</li>
+          <li>Implemented offline-first attendance sync engine using Hive FIFO queues, real-time GPS telematics with Traccar API, and geofenced check-in/out with WKT polygon ray-casting.</li>
+          <li>Delivered multi-tenant dynamic URL configuration, full Arabic/English RTL localization, and OTA hotfixes via Shorebird — reaching users in seconds without store review delays.</li>
         </ul>
       </div>
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="timeline-date">JAN 2023 — AUG 2025</div>
-        <div class="timeline-title">AI &amp; Flutter Team Leader</div>
-        <div class="timeline-company">Ideas and Concepts — On-site &amp; Remote (Saudi Arabia &amp; Egypt)</div>
+        <div class="timeline-title">Flutter Developer</div>
+        <div class="timeline-company">Ideas and Concepts — Remote &middot; Saudi Arabia &amp; Egypt</div>
         <ul class="timeline-desc">
-          <li>Directed development of AI-integrated mobile applications combining Flutter front-ends with intelligent ML backends.</li>
-          <li>Led coordination between mobile, backend, and AI teams for full-stack feature delivery across multiple product lines.</li>
-          <li>Oversaw architecture decisions, sprint planning, code reviews, and product releases using Agile/Scrum.</li>
-          <li>Delivered an offline-first enterprise POS system (Flutter) with Odoo 19 integration, SQLite caching, interactive floor plans, and thermal receipt printing.</li>
+          <li>Developed AI-integrated Flutter mobile applications combining clean architecture front-ends with intelligent ML backends for enterprise clients in Egypt and Saudi Arabia.</li>
+          <li>Designed and delivered an offline-first enterprise POS system (Flutter/Dart) for tablet and desktop (Android, iOS, Windows) integrated with Odoo 19 ERP backend.</li>
+          <li>Architected SQLite (sqflite + FFI) persistence layer and a custom vector-rendered floor plan canvas with real-time table state updates (Available, Occupied, Booked, Billed).</li>
+          <li>Configured E2E integration testing suite using Patrol 4.x and Mocktail, covering native permission flows, PIN auth, and network-drop scenarios.</li>
         </ul>
       </div>
       <div class="timeline-item">
@@ -799,18 +908,16 @@
     <div class="projects-grid">
 
       <!-- TIE DRIVER — featured -->
-      <div class="project-card featured">
+      <div class="project-card featured" data-modal="tie-driver">
         <div>
           <div class="project-header">
             <div>
               <div class="project-company">Nyota · AUG 2025 — PRESENT</div>
               <h3 class="project-title">Tie Driver</h3>
             </div>
-            <img class="project-logo"
-              src="assets/tie_driver.png"
-              alt="Tie Driver logo"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-            <div class="project-logo-fallback" style="display:none;background:rgba(79,70,229,0.1);">📍</div>
+            <div class="project-logo-wrap">
+              <img src="assets/tie_driver.png" alt="Tie Driver logo" />
+            </div>
           </div>
           <p class="project-desc">Enterprise fleet telematics and driver management app for GCC logistics companies. Drivers execute pickup/drop-off routes, submit vehicle inspections, report geo-tagged incidents, and manage HRM requests — with an offline-first architecture that never loses data on remote routes.</p>
           <div class="project-chips">
@@ -833,6 +940,7 @@
               Google Play
             </a>
           </div>
+          <button class="read-more-btn" onclick="openModal('tie-driver')">Read More <span class="rm-arrow">→</span></button>
         </div>
         <div class="featured-highlights">
           <div class="highlight-item">
@@ -855,17 +963,15 @@
       </div>
 
       <!-- MANPOWER -->
-      <div class="project-card">
+      <div class="project-card" data-modal="manpower">
         <div class="project-header">
           <div>
             <div class="project-company">Nyota · AUG 2025 — PRESENT</div>
             <h3 class="project-title">Manpower</h3>
           </div>
-          <img class="project-logo"
-            src="assets/man_power_icon.jpeg"
-            alt="Manpower logo"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="project-logo-fallback" style="display:none;background:rgba(8,145,178,0.1);">🏟️</div>
+          <div class="project-logo-wrap">
+            <img src="assets/man_power_icon.jpeg" alt="Manpower logo" />
+          </div>
         </div>
         <p class="project-desc">Workforce management and event staffing platform for GCC markets. Workers browse events, apply for roles, check in/out with geofencing, manage shifts, track tasks, and download payslips — all in one app.</p>
         <div class="project-chips">
@@ -886,28 +992,28 @@
             App Store
           </a>
         </div>
+        <button class="read-more-btn" onclick="openModal('manpower')">Read More <span class="rm-arrow">→</span></button>
       </div>
 
-      <!-- IC MERCHANDISING -->
-      <div class="project-card">
+      <!-- IC MERCHANDISING + SHELF PRO (MERGED) -->
+      <div class="project-card" data-modal="merchandising">
         <div class="project-header">
           <div>
             <div class="project-company">Ideas &amp; Concepts · 2023 — 2025</div>
-            <h3 class="project-title">IC Merchandising</h3>
+            <h3 class="project-title">IC Merchandising &amp; Shelf Pro</h3>
           </div>
-          <img class="project-logo"
-            src="assets/merchinedise.png"
-            alt="IC Merchandising logo"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-          <div class="project-logo-fallback" style="display:none;background:rgba(5,150,105,0.1);">🛒</div>
+          <div class="project-logo-wrap">
+            <img src="assets/merchinedise.png" alt="IC Merchandising logo" />
+          </div>
         </div>
-        <p class="project-desc">AI-powered merchandising and retail operations app with real-time shelf monitoring, product placement verification, barcode scanning, and visual supervisor dashboards — running on-device with TensorFlow Lite.</p>
+        <p class="project-desc">AI-powered merchandising and retail operations platform combining mobile field work with on-device YOLOv5 shelf monitoring. Real-time stock validation, product placement verification, barcode scanning, and visual supervisor dashboards — running on TensorFlow Lite.</p>
         <div class="project-chips">
           <span class="chip">Flutter</span>
           <span class="chip c-cyan">YOLOv5</span>
           <span class="chip c-cyan">TFLite</span>
           <span class="chip">Barcode Scanner</span>
           <span class="chip c-green">Offline-First</span>
+          <span class="chip">Visual Dashboard</span>
         </div>
         <div class="project-links">
           <a class="store-btn android" href="https://play.google.com/store/apps/details?id=com.ic.merchandising" target="_blank" rel="noopener">
@@ -915,40 +1021,39 @@
             Google Play
           </a>
         </div>
+        <button class="read-more-btn" onclick="openModal('merchandising')">Read More <span class="rm-arrow">→</span></button>
       </div>
 
-      <!-- SHELF PRO -->
-      <div class="project-card">
+      <!-- STUDENT TRACKING APP -->
+      <div class="project-card" data-modal="student-tracking">
         <div class="project-header">
           <div>
-            <div class="project-company">Ideas &amp; Concepts · AI Project</div>
-            <h3 class="project-title">Shelf Pro</h3>
+            <div class="project-company">AI Project · 2023</div>
+            <h3 class="project-title">Student Tracking App</h3>
           </div>
-          <div class="project-logo-fallback" style="background:linear-gradient(135deg,rgba(79,70,229,0.1),rgba(8,145,178,0.1));">📦</div>
+          <div class="project-logo-wrap">
+            <img src="assets/student_tracking.png" alt="Student Tracking logo" />
+          </div>
         </div>
-        <p class="project-desc">Custom YOLOv5 model for real-time retail shelf stock validation and product placement verification, with mobile-optimized on-device inference and visual supervisor dashboards.</p>
+        <p class="project-desc">AI-powered school transport monitoring system for parents and schools. An embedded camera module detects student bus entry/exit events with GPS tracking, real-time parent notifications, and digital attendance logs.</p>
         <div class="project-chips">
-          <span class="chip c-cyan">YOLOv5</span>
-          <span class="chip c-cyan">TensorFlow Lite</span>
           <span class="chip">Flutter</span>
-          <span class="chip">Barcode Scanner</span>
-          <span class="chip c-green">Visual Dashboard</span>
-          <span class="chip">Real-time Inference</span>
+          <span class="chip c-cyan">OpenCV</span>
+          <span class="chip c-cyan">Firebase</span>
+          <span class="chip c-green">GPS / Maps</span>
+          <span class="chip">Real-time Alerts</span>
         </div>
-        <ul class="proj-bullets">
-          <li>Custom YOLOv5 model for real-time retail shelf stock validation and product placement verification.</li>
-          <li>Mobile-optimized inference via TensorFlow Lite; barcode scanning with visual dashboards for supervisors.</li>
-        </ul>
+        <button class="read-more-btn" onclick="openModal('student-tracking')">Read More <span class="rm-arrow">→</span></button>
       </div>
 
       <!-- DOOR AND WINDOW AR APP -->
-      <div class="project-card">
+      <div class="project-card" data-modal="ar-app">
         <div class="project-header">
           <div>
             <div class="project-company">AR / Flutter · AI Project</div>
             <h3 class="project-title">Door &amp; Window AR App</h3>
           </div>
-          <div class="project-logo-fallback" style="background:linear-gradient(135deg,rgba(8,145,178,0.1),rgba(5,150,105,0.1));">🪟</div>
+          <div class="project-logo-fallback" style="background:linear-gradient(135deg,rgba(14,116,144,0.1),rgba(4,120,87,0.1));">🪟</div>
         </div>
         <p class="project-desc">Flutter app with ARCore integration for measuring door and window dimensions in augmented reality. Users place virtual objects to estimate fit, generate instant quotes, and connect with supervisors via live chat.</p>
         <div class="project-chips">
@@ -959,20 +1064,17 @@
           <span class="chip">Live Chat</span>
           <span class="chip">3D Measurement</span>
         </div>
-        <ul class="proj-bullets">
-          <li>Flutter app with ARCore integration for measuring door and window dimensions in augmented reality.</li>
-          <li>Users place virtual objects to estimate fit, then generate instant quotes and connect with supervisors via live chat.</li>
-        </ul>
+        <button class="read-more-btn" onclick="openModal('ar-app')">Read More <span class="rm-arrow">→</span></button>
       </div>
 
       <!-- ENTERPRISE POS -->
-      <div class="project-card">
+      <div class="project-card" data-modal="pos">
         <div class="project-header">
           <div>
             <div class="project-company">Ideas &amp; Concepts · 2023 — 2025</div>
             <h3 class="project-title">Enterprise POS System</h3>
           </div>
-          <div class="project-logo-fallback" style="background:rgba(5,150,105,0.1);">🖥️</div>
+          <div class="project-logo-fallback" style="background:rgba(4,120,87,0.1);">🖥️</div>
         </div>
         <p class="project-desc">Cross-platform offline-first Point-of-Sale terminal (tablet &amp; desktop) integrated with Odoo 19 ERP. Features interactive floor plan management, thermal printing, and seamless offline operation with local SQLite sync.</p>
         <div class="project-chips">
@@ -986,6 +1088,7 @@
         <div style="margin-top:1rem;">
           <span style="font-size:0.75rem;color:var(--muted);">🖥 Tablet · Desktop (Windows/macOS) · Android · iOS</span>
         </div>
+        <button class="read-more-btn" onclick="openModal('pos')">Read More <span class="rm-arrow">→</span></button>
       </div>
 
     </div>
@@ -1261,6 +1364,203 @@ phoneCards.forEach((card, idx) => {
     }
     updatePhonePositions();
   });
+});
+</script>
+
+<!-- Project Modal -->
+<div class="modal-overlay" id="project-modal" onclick="closeModal(event)">
+  <div class="modal-panel" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal(event)">✕</button>
+    
+    <div class="modal-header">
+      <div class="modal-logo-wrap" id="modal-logo-wrap">
+        <img id="modal-logo" src="" alt="Project logo" onerror="this.style.display='none'; document.getElementById('modal-fallback').style.display='flex';" />
+        <div id="modal-fallback" class="modal-logo-fallback" style="display:none;background:rgba(67,56,202,0.1);"></div>
+      </div>
+      <div>
+        <div class="modal-company" id="modal-company"></div>
+        <h3 class="modal-title" id="modal-title"></h3>
+      </div>
+    </div>
+    
+    <p class="modal-desc" id="modal-desc"></p>
+    
+    <div id="modal-dynamic-content"></div>
+    
+  </div>
+</div>
+
+<script>
+// Modal Data & Logic
+const projectData = {
+  "tie-driver": {
+    logo: "assets/tie_driver.png", fallback: "📍", company: "NYOTA · AUG 2025 — PRESENT", title: "Tie Driver",
+    desc: "A fully offline-first enterprise fleet telematics and driver management app for GCC logistics companies. Drivers execute pickup/drop-off routes, submit vehicle inspections, report geo-tagged incidents, and manage HRM requests.",
+    sections: {
+      "Key Features": [
+        "Offline-First Sync Engine: Persistent FIFO queue using Hive DB buffers attendance and telemetry locally when network is unavailable.",
+        "Live Traccar Telematics: Background GPS streaming of speed, bearing, and battery to dispatcher portals.",
+        "Fleet Safety Tools: Multi-step vehicle inspection checklists and geo-tagged incident reporting.",
+        "Full RTL Localization: Bilingual Arabic/English UI with dynamic font switching."
+      ],
+      "Technologies": ["Flutter", "BLoC/Cubit", "Clean Architecture", "Traccar GPS", "Hive", "GetIt", "GoRouter"]
+    },
+    links: [
+      { url: "https://apps.apple.com/ca/app/tie-driver/id6758572556", label: "App Store" },
+      { url: "https://play.google.com/store/apps/details?id=com.nyota.tie_driver", label: "Google Play" }
+    ]
+  },
+  "manpower": {
+    logo: "assets/man_power_icon.jpeg", fallback: "🏟️", company: "NYOTA · AUG 2025 — PRESENT", title: "Manpower",
+    desc: "Workforce management and event staffing platform for GCC markets. Workers browse events, apply for roles, check in/out with geofencing, manage shifts, track tasks, and download payslips.",
+    sections: {
+      "Key Features": [
+        "Geofenced Check-ins: WKT polygon ray-casting integration for strict event check-in/out protocols.",
+        "Shift Management: Complete lifecycle tracking from application to task completion and payslip generation.",
+        "Over-The-Air Updates: Shorebird integration for instant hotfixes bypassing app store reviews.",
+        "Multi-Tenant Support: Dynamic API routing based on enterprise client configuration."
+      ],
+      "Technologies": ["Flutter", "Geofencing", "WKT Polygons", "Shorebird OTA", "Multi-Tenant"]
+    },
+    links: [
+      { url: "https://play.google.com/store/apps/details?id=com.nyota.manpower", label: "Google Play" },
+      { url: "https://apps.apple.com/us/app/nyota-manpower/id6760614579", label: "App Store" }
+    ]
+  },
+  "merchandising": {
+    logo: "assets/merchinedise.png", fallback: "🛒", company: "IDEAS & CONCEPTS · 2023 — 2025", title: "IC Merchandising & Shelf Pro",
+    desc: "AI-powered merchandising and retail operations platform combining mobile field work with on-device YOLOv5 shelf monitoring. Ensures planogram compliance and visual reporting.",
+    sections: {
+      "Key Features": [
+        "On-Device AI: Custom YOLOv5 model for real-time retail shelf stock validation and product placement verification.",
+        "Mobile Optimized: Runs on-device via TensorFlow Lite to ensure low-latency inference without network dependency.",
+        "Operational Tools: Barcode scanning, offline-first data entry, and visual supervisor dashboards."
+      ],
+      "Technologies": ["Flutter", "YOLOv5", "TensorFlow Lite", "Barcode Scanner", "Offline-First"]
+    },
+    links: [
+      { url: "https://play.google.com/store/apps/details?id=com.ic.merchandising", label: "Google Play" }
+    ]
+  },
+  "student-tracking": {
+    logo: "assets/student_tracking.png", fallback: "🚌", company: "AI PROJECT · 2023", title: "Student Tracking App",
+    desc: "AI-powered school transport monitoring system for parents and schools. Utilizes computer vision and GPS to ensure student safety during transit.",
+    sections: {
+      "Key Features": [
+        "Computer Vision Integration: Embedded camera module detects student bus entry/exit events.",
+        "Live Tracking: GPS tracking with real-time parent notifications via Firebase.",
+        "Digital Logs: Automated attendance logging reducing manual driver workload."
+      ],
+      "Technologies": ["Flutter", "OpenCV", "Firebase", "GPS / Maps", "Real-time Alerts"]
+    },
+    links: []
+  },
+  "ar-app": {
+    logo: "", fallback: "🪟", company: "AR / FLUTTER · AI PROJECT", title: "Door & Window AR App",
+    desc: "Flutter app with ARCore integration for measuring door and window dimensions in augmented reality. Helps customers visualize products before purchasing.",
+    sections: {
+      "Key Features": [
+        "AR Measurement: Users place virtual objects to estimate fit and 3D dimensions.",
+        "Sales Integration: Generate instant quotes based on AR measurements.",
+        "Customer Support: Connect with supervisors or sales reps via live chat."
+      ],
+      "Technologies": ["Flutter", "ARCore", "Augmented Reality", "Instant Quotes", "Live Chat"]
+    },
+    links: []
+  },
+  "pos": {
+    logo: "", fallback: "🖥️", company: "IDEAS & CONCEPTS · 2023 — 2025", title: "Enterprise POS System",
+    desc: "Cross-platform offline-first Point-of-Sale terminal designed for tablet and desktop (Windows/macOS/Android/iOS) integrated with Odoo 19 ERP.",
+    sections: {
+      "Key Features": [
+        "Offline-First Operation: Seamless offline operation with local SQLite sync using FFI for performance.",
+        "Floor Plan Management: Custom vector-rendered floor plan canvas with real-time table state updates (Available, Occupied, Booked, Billed).",
+        "Hardware Integration: Thermal printing and network-drop scenario handling.",
+        "Robust Testing: Configured E2E integration testing suite using Patrol 4.x and Mocktail."
+      ],
+      "Technologies": ["Flutter", "Odoo 19", "SQLite / FFI", "Floor Plans", "Patrol E2E Tests", "Thermal Printing"]
+    },
+    links: []
+  }
+};
+
+function openModal(id) {
+  const data = projectData[id];
+  if(!data) return;
+  
+  // Reset
+  document.getElementById('modal-logo').style.display = 'block';
+  document.getElementById('modal-fallback').style.display = 'none';
+  
+  if(data.logo) {
+    document.getElementById('modal-logo').src = data.logo;
+  } else {
+    document.getElementById('modal-logo').style.display = 'none';
+    document.getElementById('modal-fallback').style.display = 'flex';
+    document.getElementById('modal-fallback').innerHTML = data.fallback;
+  }
+  
+  document.getElementById('modal-company').innerText = data.company;
+  document.getElementById('modal-title').innerText = data.title;
+  document.getElementById('modal-desc').innerText = data.desc;
+  
+  let dynamicHtml = '';
+  
+  // Sections
+  if (data.sections) {
+    for (const [sectionTitle, items] of Object.entries(data.sections)) {
+      dynamicHtml += `<div class="modal-section-label">${sectionTitle}</div>`;
+      if (sectionTitle === 'Technologies') {
+        dynamicHtml += `<div class="modal-chips">`;
+        items.forEach(item => {
+          dynamicHtml += `<span class="chip">${item}</span>`;
+        });
+        dynamicHtml += `</div>`;
+      } else {
+        dynamicHtml += `<ul class="modal-bullets">`;
+        items.forEach(item => {
+          dynamicHtml += `<li>${item}</li>`;
+        });
+        dynamicHtml += `</ul>`;
+      }
+    }
+  }
+  
+  // Links
+  if (data.links && data.links.length > 0) {
+    dynamicHtml += `<div class="modal-section-label">Links</div><div class="modal-links">`;
+    data.links.forEach(link => {
+      let icon = '';
+      let cls = 'store-btn';
+      if(link.label.includes('App Store')) {
+         icon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>`;
+         cls += ' ios';
+      } else if (link.label.includes('Google Play')) {
+         icon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.18.95.07L13.86 12 3.12.17C2.8.07 2.45.1 2.17.28 1.67.6 1.33 1.17 1.33 1.83v20.34c0 .66.34 1.23.85 1.59zm14.49-10.65-2.83-2.83-1.32 1.32 2.62 2.62-7.14 4.12 1.2 1.2 9-5.19c.49-.29.49-1.02 0-1.24H17.67zm-5.53-3.94 1.32-1.32 2.83-2.83c.49-.49.49-1.29 0-1.77L7.11 1.5 5.91 2.7l6.23 6.47z"/></svg>`;
+         cls += ' android';
+      }
+      dynamicHtml += `<a class="${cls}" href="${link.url}" target="_blank" rel="noopener">${icon} ${link.label}</a>`;
+    });
+    dynamicHtml += `</div>`;
+  }
+  
+  document.getElementById('modal-dynamic-content').innerHTML = dynamicHtml;
+  document.getElementById('project-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  document.getElementById('project-modal').classList.remove('open');
+  document.body.style.overflow = 'auto';
+}
+
+// Escape key to close
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
 });
 </script>
 </body>
