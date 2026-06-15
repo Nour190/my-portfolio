@@ -141,12 +141,12 @@
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79,70,229,0.38); }
   .btn-secondary {
     display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.8rem 1.75rem; background: #fff; color: var(--text);
+    padding: 0.8rem 1.75rem; background: transparent; color: var(--indigo);
     text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 0.9rem;
-    border: 1px solid var(--border); box-shadow: var(--shadow);
-    transition: border-color 0.2s, transform 0.2s;
+    border: 2px solid var(--indigo); box-shadow: var(--shadow);
+    transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
   }
-  .btn-secondary:hover { border-color: var(--indigo2); transform: translateY(-2px); }
+  .btn-secondary:hover { background: rgba(99,102,241,0.05); transform: translateY(-2px); }
   .btn-whatsapp {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
     padding: 0.8rem 1.75rem;
@@ -177,13 +177,17 @@
                 box-shadow 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
-  .phone-card.pos-1 { transform: rotate(-8deg) translate(-36px, 24px) scale(0.94); z-index: 1; opacity: 0.8; }
-  .phone-card.pos-2 { transform: rotate(5deg) translate(22px, -18px) scale(0.97); z-index: 2; opacity: 0.9; }
-  .phone-card.pos-3 { transform: rotate(0deg) translate(-5px, 0px) scale(1.03); z-index: 3; opacity: 1; box-shadow: 0 30px 70px rgba(15,23,42,0.22), 0 6px 20px rgba(15,23,42,0.08); }
+  .phone-card.pos-1 { transform: rotate(-16deg) translate(-100px, 45px) scale(0.88); z-index: 1; opacity: 0.7; }
+  .phone-card.pos-2 { transform: rotate(-8deg) translate(-50px, 20px) scale(0.94); z-index: 2; opacity: 0.8; }
+  .phone-card.pos-3 { transform: rotate(8deg) translate(50px, 20px) scale(0.94); z-index: 2; opacity: 0.8; }
+  .phone-card.pos-4 { transform: rotate(16deg) translate(100px, 45px) scale(0.88); z-index: 1; opacity: 0.7; }
+  .phone-card.pos-5 { transform: rotate(0deg) translate(0px, 0px) scale(1.03); z-index: 5; opacity: 1; box-shadow: 0 30px 70px rgba(15,23,42,0.22), 0 6px 20px rgba(15,23,42,0.08); }
 
-  .phone-stack:hover .phone-card.pos-1 { transform: rotate(-14deg) translate(-75px, 35px) scale(0.94); opacity: 0.9; }
-  .phone-stack:hover .phone-card.pos-2 { transform: rotate(10deg) translate(65px, -30px) scale(0.97); opacity: 0.95; }
-  .phone-stack:hover .phone-card.pos-3 { transform: rotate(0deg) translate(-5px, -20px) scale(1.06); opacity: 1; cursor: pointer; }
+  .phone-stack:hover .phone-card.pos-1 { transform: rotate(-22deg) translate(-140px, 65px) scale(0.88); opacity: 0.85; }
+  .phone-stack:hover .phone-card.pos-2 { transform: rotate(-12deg) translate(-80px, 30px) scale(0.94); opacity: 0.9; }
+  .phone-stack:hover .phone-card.pos-3 { transform: rotate(12deg) translate(80px, 30px) scale(0.94); opacity: 0.9; }
+  .phone-stack:hover .phone-card.pos-4 { transform: rotate(22deg) translate(140px, 65px) scale(0.88); opacity: 0.85; }
+  .phone-stack:hover .phone-card.pos-5 { transform: rotate(0deg) translate(0px, -20px) scale(1.06); opacity: 1; cursor: pointer; }
 
   .phone-statusbar {
     width: 100%; height: 32px; background: transparent;
@@ -294,6 +298,20 @@
     background-size: 200% 200%;
     animation: mesh-movement 15s ease infinite alternate;
   }
+  .bg-estsharioon {
+    background: radial-gradient(circle at 80% 20%, #10B981 0%, transparent 60%),
+                radial-gradient(circle at 20% 80%, #0EA5E9 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, #061f1a 0%, #020b09 100%);
+    background-size: 200% 200%;
+    animation: mesh-movement 14s ease infinite alternate;
+  }
+  .bg-student-tracking {
+    background: radial-gradient(circle at 10% 20%, #F59E0B 0%, transparent 60%),
+                radial-gradient(circle at 90% 80%, #EC4899 0%, transparent 60%),
+                radial-gradient(circle at 50% 50%, #291a02 0%, #0c0801 100%);
+    background-size: 200% 200%;
+    animation: mesh-movement 13s ease infinite alternate-reverse;
+  }
 
   @keyframes mesh-movement {
     0% { background-position: 0% 0%; }
@@ -385,6 +403,21 @@
   .timeline-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
   .timeline-desc li { margin-bottom: 0.4rem; padding-left: 1rem; position: relative; }
   .timeline-desc li::before { content: '→'; position: absolute; left: 0; color: var(--indigo2); font-size: 0.75rem; top: 0.15rem; }
+
+  @keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  }
+  .project-flag.progress {
+    position: absolute; top: -1px; right: 2rem;
+    background: var(--green); color: #fff;
+    padding: 0.35rem 1rem; border-radius: 0 0 8px 8px;
+    font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    animation: pulse-green 2s infinite;
+    z-index: 5;
+  }
 
   /* PROJECTS */
   #projects { background: var(--bg2); }
@@ -584,7 +617,7 @@
     .phone-stack { transform: scale(0.68); transform-origin: center center; }
     .hero-sub { margin-left: 0; margin-right: auto; }
     .hero-badges { justify-content: flex-start; }
-    .hero-ctas { justify-content: flex-start; }
+    .hero-ctas { justify-content: center; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .edu-grid { grid-template-columns: 1fr; }
     .project-card.featured { grid-column: 1; grid-template-columns: 1fr; }
@@ -596,7 +629,7 @@
     section { padding: 4rem 5vw; }
     nav { padding: 0 5vw; }
     .hero-name { font-size: 2.2rem; }
-    .hero-ctas { flex-wrap: nowrap; gap: 0.4rem; align-items: center; }
+    .hero-ctas { flex-wrap: nowrap; gap: 0.4rem; align-items: center; justify-content: center; }
     .hero-ctas .btn-primary, .hero-ctas .btn-secondary, .hero-ctas .btn-whatsapp {
       padding: 0.65rem 0.5rem;
       font-size: 0.72rem;
@@ -940,6 +973,56 @@
           <div class="phone-app-badge">Merchandising</div>
         </div>
 
+        <!-- Phone 4: Estsharioon -->
+        <div class="phone-card pos-4 bg-estsharioon">
+          <div class="phone-statusbar">
+            <span class="phone-time">09:41</span>
+            <div class="phone-notch-pill"></div>
+            <div class="phone-status-icons">
+              <svg class="phone-icon-svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21l-12-12c4.4-4.4 11.6-4.4 16 0l-4 4c-2.2-2.2-5.8-2.2-8 0l8 8 8-8-4-4c.6-.6 1.4-.9 2.2-.9.8 0 1.6.3 2.2.9l-12 12z"/></svg>
+              <svg class="phone-icon-svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17 5H3a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2m2 4h2v6h-2V9z"/></svg>
+            </div>
+          </div>
+          <div class="phone-screen-content">
+            <div class="phone-app-logo-container" style="box-shadow: 0 12px 32px rgba(16,185,129,0.35);">
+              <img class="phone-app-logo" src="assets/estsharion.png" alt="Estsharioon" />
+            </div>
+            <h3 class="phone-app-title">Estsharioon</h3>
+            <p class="phone-app-subtitle">Consulting App</p>
+            <div class="phone-app-ui-elements">
+              <div class="phone-ui-bar"></div>
+              <div class="phone-ui-bar short"></div>
+            </div>
+          </div>
+          <div class="phone-home-indicator"></div>
+          <div class="phone-app-badge">Estsharioon</div>
+        </div>
+
+        <!-- Phone 5: Student Tracking -->
+        <div class="phone-card pos-5 bg-student-tracking">
+          <div class="phone-statusbar">
+            <span class="phone-time">09:41</span>
+            <div class="phone-notch-pill"></div>
+            <div class="phone-status-icons">
+              <svg class="phone-icon-svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21l-12-12c4.4-4.4 11.6-4.4 16 0l-4 4c-2.2-2.2-5.8-2.2-8 0l8 8 8-8-4-4c.6-.6 1.4-.9 2.2-.9.8 0 1.6.3 2.2.9l-12 12z"/></svg>
+              <svg class="phone-icon-svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17 5H3a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2m2 4h2v6h-2V9z"/></svg>
+            </div>
+          </div>
+          <div class="phone-screen-content">
+            <div class="phone-app-logo-container" style="box-shadow: 0 12px 32px rgba(245,158,11,0.35);">
+              <img class="phone-app-logo" src="assets/student_tracking.png" alt="Student Tracking" />
+            </div>
+            <h3 class="phone-app-title">Student Tracking</h3>
+            <p class="phone-app-subtitle">AI Transport</p>
+            <div class="phone-app-ui-elements">
+              <div class="phone-ui-bar"></div>
+              <div class="phone-ui-bar short"></div>
+            </div>
+          </div>
+          <div class="phone-home-indicator"></div>
+          <div class="phone-app-badge">Student Tracking</div>
+        </div>
+
         <div class="floating-chip">BLoC + GetIt</div>
         <div class="floating-chip">Clean Architecture</div>
         <div class="floating-chip">✓ Live on Stores</div>
@@ -1070,6 +1153,7 @@
 
       <!-- ESTSHARIOON — featured -->
       <div class="project-card featured" data-modal="estsharioon">
+        <div class="project-flag progress">In Progress</div>
         <div>
           <div class="project-header">
             <div>
@@ -1522,19 +1606,19 @@ document.querySelectorAll('section[id]').forEach(s => navObs.observe(s));
 
 // PHONE STACK CYCLE ANIMATION
 const phoneCards = document.querySelectorAll('.phone-card');
-let currentPositions = [1, 2, 3];
+let currentPositions = [1, 2, 3, 4, 5];
 let cycleInterval;
 
 function updatePhonePositions() {
   phoneCards.forEach((card, idx) => {
-    card.classList.remove('pos-1', 'pos-2', 'pos-3');
+    card.classList.remove('pos-1', 'pos-2', 'pos-3', 'pos-4', 'pos-5');
     const pos = currentPositions[idx];
     card.classList.add(`pos-${pos}`);
   });
 }
 
 function rotatePositions() {
-  currentPositions = currentPositions.map(pos => (pos % 3) + 1);
+  currentPositions = currentPositions.map(pos => (pos % 5) + 1);
   updatePhonePositions();
 }
 
