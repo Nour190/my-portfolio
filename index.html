@@ -147,6 +147,17 @@
     transition: border-color 0.2s, transform 0.2s;
   }
   .btn-secondary:hover { border-color: var(--indigo2); transform: translateY(-2px); }
+  .btn-whatsapp {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 0.8rem 1.75rem;
+    background: #128C7E;
+    color: #fff; text-decoration: none; border-radius: 10px;
+    font-weight: 600; font-size: 0.9rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 18px rgba(18,140,126,0.25);
+  }
+  .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(18,140,126,0.35); }
+  .btn-whatsapp svg { width: 18px; height: 18px; fill: currentColor; }
 
   /* PHONE STACK */
   .hero-visual {
@@ -568,12 +579,12 @@
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   @media (max-width: 900px) {
-    .hero-inner { grid-template-columns: 1fr; gap: 3rem; padding-top: 100px; text-align: center; }
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; padding-top: 100px; text-align: left; }
     .hero-visual { height: 320px; }
     .phone-stack { transform: scale(0.68); transform-origin: center center; }
-    .hero-sub { margin-left: auto; margin-right: auto; }
-    .hero-badges { justify-content: center; }
-    .hero-ctas { justify-content: center; }
+    .hero-sub { margin-left: 0; margin-right: auto; }
+    .hero-badges { justify-content: flex-start; }
+    .hero-ctas { justify-content: flex-start; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .edu-grid { grid-template-columns: 1fr; }
     .project-card.featured { grid-column: 1; grid-template-columns: 1fr; }
@@ -585,6 +596,17 @@
     section { padding: 4rem 5vw; }
     nav { padding: 0 5vw; }
     .hero-name { font-size: 2.2rem; }
+    .hero-ctas { flex-wrap: nowrap; gap: 0.4rem; align-items: center; }
+    .hero-ctas .btn-primary, .hero-ctas .btn-secondary, .hero-ctas .btn-whatsapp {
+      padding: 0.65rem 0.5rem;
+      font-size: 0.72rem;
+      white-space: nowrap;
+      flex: 1;
+      justify-content: center;
+    }
+    .hero-ctas .btn-whatsapp svg {
+      width: 14px; height: 14px;
+    }
   }
 
   /* ── MODAL OVERLAY ── */
@@ -670,6 +692,63 @@
     .modal-title { font-size: 1.15rem; }
   }
 
+  /* ADVANCED GLASSMORPHISM GLOBAL OVERRIDES */
+  .about-card, .project-card, .ai-card, .skill-group, .edu-card, .cert-item {
+    background: rgba(255, 255, 255, 0.65) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
+    box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.03) !important;
+  }
+
+  /* SECTION BACKGROUND TRANSITIONS */
+  #hero { background: transparent; }
+  #about { background: linear-gradient(to bottom, transparent, rgba(244, 243, 255, 0.45)); }
+  #experience { background: linear-gradient(to bottom, rgba(244, 243, 255, 0.45), rgba(252, 251, 249, 0.25)); }
+  #projects { background: linear-gradient(to bottom, rgba(252, 251, 249, 0.25), rgba(224, 242, 254, 0.35)); }
+  #ai-projects { background: linear-gradient(to bottom, rgba(224, 242, 254, 0.35), rgba(236, 253, 245, 0.35)); }
+  #skills { background: linear-gradient(to bottom, rgba(236, 253, 245, 0.35), rgba(254, 243, 199, 0.25)); }
+  #education { background: linear-gradient(to bottom, rgba(254, 243, 199, 0.25), transparent); }
+  #contact { background: linear-gradient(to bottom, transparent, rgba(255, 241, 242, 0.55)); }
+
+  /* AMBIENT BACKGROUND BLOBS */
+  .ambient-blob {
+    position: fixed;
+    width: min(800px, 90vw);
+    height: min(800px, 90vw);
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.08;
+    z-index: -1;
+    pointer-events: none;
+    will-change: transform;
+    animation: float-blob 22s infinite alternate ease-in-out;
+  }
+  .blob-1 {
+    background: var(--indigo2);
+    top: -10%;
+    left: -10%;
+  }
+  .blob-2 {
+    background: var(--cyan);
+    bottom: -15%;
+    right: -10%;
+    animation-delay: -5s;
+  }
+  .blob-3 {
+    background: var(--green);
+    top: 40%;
+    left: 60%;
+    animation-delay: -11s;
+    opacity: 0.06;
+  }
+  @keyframes float-blob {
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(60px, -80px) scale(1.15); }
+    66% { transform: translate(-40px, 50px) scale(0.92); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
   /* MOBILE NAVIGATION */
   .menu-toggle {
     display: none; flex-direction: column; gap: 5px;
@@ -685,28 +764,50 @@
   .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
   .mobile-menu {
-    position: fixed; inset: 0; background: var(--bg);
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: 280px; background: var(--bg);
     z-index: 105; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 2rem; opacity: 0; pointer-events: none;
-    transition: opacity 0.35s ease, transform 0.35s ease;
-    transform: translateY(-10px);
-    padding-top: 68px;
+    align-items: flex-start; justify-content: flex-start;
+    gap: 1.75rem; padding: 6rem 2.5rem 2rem;
+    box-shadow: -10px 0 40px rgba(12,18,41,0.08);
+    border-left: 1px solid var(--border);
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .mobile-menu.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .mobile-menu.open { transform: translateX(0); }
   .mobile-menu a {
-    font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem;
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem;
     font-weight: 700; color: var(--text); text-decoration: none;
     transition: color 0.2s;
+    width: 100%;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(12,18,41,0.03);
   }
   .mobile-menu a:hover { color: var(--indigo); }
   .mobile-menu .nav-cta {
-    padding: 0.8rem 2.2rem; font-size: 1.1rem;
+    margin-top: 1rem;
+    padding: 0.75rem 2.2rem; font-size: 1rem;
     background: var(--indigo); color: #fff !important; border-radius: 8px;
+    text-align: center;
+    border-bottom: none;
   }
+
+  .menu-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(12,18,41,0.25);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 104;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .menu-backdrop.open { opacity: 1; pointer-events: all; }
 </style>
 </head>
 <body>
+<div class="ambient-blob blob-1"></div>
+<div class="ambient-blob blob-2"></div>
+<div class="ambient-blob blob-3"></div>
 
 <!-- NAV -->
 <nav>
@@ -752,6 +853,10 @@
         <a href="mailto:nourmohamed20230@gmail.com" class="btn-secondary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           Get in Touch
+        </a>
+        <a href="https://wa.me/201273715298" class="btn-whatsapp" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.504-5.714-1.466L0 24zm6.59-2.535c1.52.901 3.013 1.375 4.831 1.376 5.513 0 9.998-4.488 10.002-10.002.002-2.673-1.037-5.184-2.927-7.076-1.89-1.89-4.405-2.93-7.081-2.93-5.523 0-10.009 4.488-10.013 10.003-.001 1.875.5 3.708 1.45 5.253L1.082 22.91l4.588-1.202c.007-.002.015-.005.023-.007.294-.084.629-.126.954-.236zm12.336-7.39c-.316-.16-1.87-.923-2.158-1.03-.288-.106-.499-.158-.709.158-.21.316-.81.103-1.02.103a.526.526 0 01-.39-.185c-.158-.158-.667-.246-1.272-.786-.47-.42-.787-.938-.879-1.096-.092-.158-.01-.244.07-.321.071-.07.158-.185.237-.278.08-.093.106-.159.158-.266.053-.106.027-.2-.013-.316-.04-.106-.499-1.21-.684-1.656-.18-.439-.379-.38-.52-.38h-.443c-.158 0-.414.059-.63.294-.216.237-.827.809-.827 1.972 0 1.163.846 2.288.964 2.446.118.158 1.664 2.54 4.032 3.56.563.242 1.002.387 1.344.496.565.179 1.08.153 1.486.093.453-.066 1.87-.765 2.133-1.472.262-.708.262-1.315.184-1.442-.079-.127-.288-.184-.604-.344z"/></svg>
+          WhatsApp
         </a>
       </div>
     </div>
@@ -962,6 +1067,47 @@
     <p class="section-sub">Enterprise-grade Flutter apps deployed across the GCC region — all built with Clean Architecture and live on the App Store and Google Play.</p>
 
     <div class="projects-grid">
+
+      <!-- ESTSHARIOON — featured -->
+      <div class="project-card featured" data-modal="estsharioon">
+        <div>
+          <div class="project-header">
+            <div>
+              <div class="project-company">Estsharioon · CONSULTING APP</div>
+              <h3 class="project-title">Estsharioon (إستشاريون)</h3>
+            </div>
+            <div class="project-logo-wrap">
+              <img src="assets/estsharion.png" alt="Estsharioon logo" />
+            </div>
+          </div>
+          <p class="project-desc">A professional, production-ready, cross-platform mobile application built using Flutter and Dart. It functions as a consulting marketplace and real-time collaboration platform, connecting clients with professional consultants.</p>
+          <div class="project-chips">
+            <span class="chip">Flutter</span>
+            <span class="chip">Clean Architecture</span>
+            <span class="chip c-cyan">Socket.IO</span>
+            <span class="chip c-green">SQLite Caching</span>
+            <span class="chip c-cyan">Retrofit</span>
+            <span class="chip">BLoC/Cubit</span>
+          </div>
+          <div class="project-links">
+          </div>
+          <button class="read-more-btn" onclick="openModal('estsharioon')">Read More <span class="rm-arrow">→</span></button>
+        </div>
+        <div class="featured-highlights">
+          <div class="highlight-item">
+            <div class="highlight-title">🔌 Dual-Flavor Architecture</div>
+            <div class="highlight-text">Architected and developed a dual-flavor consulting marketplace application (Client / Consultant) using Flutter and Dart from a single codebase, improving developer efficiency and release cycles.</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-title">📡 Real-time Messaging</div>
+            <div class="highlight-text">Engineered a robust, real-time messaging system using WebSockets (Socket.IO), providing instant messaging, online presence indicators, and low-latency delivery across project-specific chat rooms.</div>
+          </div>
+          <div class="highlight-item">
+            <div class="highlight-title">💾 User-Scoped Caching</div>
+            <div class="highlight-text">Designed a custom, secure User-Scoped Local Caching Coordinator via SQLite (sqflite), isolating private database files per user session to prevent local data leakage.</div>
+          </div>
+        </div>
+      </div>
 
       <!-- TIE DRIVER — featured -->
       <div class="project-card featured" data-modal="tie-driver">
@@ -1276,6 +1422,10 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
         +20 127 371 5298
       </a>
+      <a href="https://wa.me/201273715298" class="contact-link" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.504-5.714-1.466L0 24zm6.59-2.535c1.52.901 3.013 1.375 4.831 1.376 5.513 0 9.998-4.488 10.002-10.002.002-2.673-1.037-5.184-2.927-7.076-1.89-1.89-4.405-2.93-7.081-2.93-5.523 0-10.009 4.488-10.013 10.003-.001 1.875.5 3.708 1.45 5.253L1.082 22.91l4.588-1.202c.007-.002.015-.005.023-.007.294-.084.629-.126.954-.236zm12.336-7.39c-.316-.16-1.87-.923-2.158-1.03-.288-.106-.499-.158-.709.158-.21.316-.81.103-1.02.103a.526.526 0 01-.39-.185c-.158-.158-.667-.246-1.272-.786-.47-.42-.787-.938-.879-1.096-.092-.158-.01-.244.07-.321.071-.07.158-.185.237-.278.08-.093.106-.159.158-.266.053-.106.027-.2-.013-.316-.04-.106-.499-1.21-.684-1.656-.18-.439-.379-.38-.52-.38h-.443c-.158 0-.414.059-.63.294-.216.237-.827.809-.827 1.972 0 1.163.846 2.288.964 2.446.118.158 1.664 2.54 4.032 3.56.563.242 1.002.387 1.344.496.565.179 1.08.153 1.486.093.453-.066 1.87-.765 2.133-1.472.262-.708.262-1.315.184-1.442-.079-.127-.288-.184-.604-.344z"/></svg>
+        WhatsApp
+      </a>
       <a href="https://www.linkedin.com/in/nour-mohamed" class="contact-link" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
         LinkedIn
@@ -1449,6 +1599,31 @@ phoneCards.forEach((card, idx) => {
 <script>
 // Modal Data & Logic
 const projectData = {
+  "estsharioon": {
+    logo: "assets/estsharion.png", fallback: "🤝", company: "Estsharioon · CONSULTING APP", title: "Estsharioon (إستشاريون)",
+    desc: "A professional, production-ready, cross-platform mobile application built using Flutter and Dart. It functions as a consulting marketplace and real-time collaboration platform, connecting clients with professional consultants. The application utilizes a single codebase to distribute two distinct apps (Client and Consultant variants) through Flutter Flavors, powered by a highly structured clean architecture, local caching, and real-time messaging.",
+    sections: {
+      "How to List This on Your CV": [
+        "Architected and developed a dual-flavor consulting marketplace application (Client / Consultant) using Flutter and Dart from a single codebase.",
+        "Implemented Clean Architecture and Feature-First structure across the application, separating networking, local databases, and UI widgets.",
+        "Engineered a robust, real-time messaging system using WebSockets (Socket.IO), providing instant messaging, online presence indicators, and low-latency delivery.",
+        "Designed a custom, secure User-Scoped Local Caching Coordinator via SQLite (sqflite), isolating private database files per user session.",
+        "Integrated type-safe REST APIs by combining Dio with Retrofit code generators.",
+        "Configured multi-language localization (Arabic / English) using easy_localization, dynamically shifting layouts between RTL and LTR.",
+        "Managed state predictability and immutability by leveraging the BLoC/Cubit pattern alongside freezed code generation."
+      ],
+      "Technology Stack & Libraries": [
+        "Framework: Flutter & Dart (SDK 3.9+)",
+        "State Management: flutter_bloc (Cubit pattern), freezed",
+        "Networking: Dio, Retrofit, Socket.IO (socket_io_client)",
+        "Dependency Injection: GetIt, Injectable",
+        "Database & Caching: sqflite, flutter_secure_storage, shared_preferences",
+        "Navigation: GoRouter",
+        "UI & Localization: easy_localization (RTL/LTR), flutter_screenutil"
+      ]
+    },
+    links: []
+  },
   "tie-driver": {
     logo: "assets/tie_driver.png", fallback: "📍", company: "NYOTA · AUG 2025 — PRESENT", title: "Tie Driver",
     desc: "A fully offline-first enterprise fleet telematics and driver management app for GCC logistics companies. Drivers execute pickup/drop-off routes, submit vehicle inspections, report geo-tagged incidents, and manage HRM requests.",
@@ -1630,20 +1805,30 @@ mobileMenu.innerHTML = `
   <a href="#skills">Skills</a>
   <a href="#contact" class="nav-cta">Hire Me</a>
 `;
+
+const menuBackdrop = document.createElement('div');
+menuBackdrop.className = 'menu-backdrop';
+document.body.appendChild(menuBackdrop);
 document.body.appendChild(mobileMenu);
 
 menuToggle.addEventListener('click', () => {
   const isOpen = menuToggle.classList.toggle('open');
   mobileMenu.classList.toggle('open');
+  menuBackdrop.classList.toggle('open');
   document.body.style.overflow = isOpen ? 'hidden' : 'auto';
 });
 
+const closeMenu = () => {
+  menuToggle.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  menuBackdrop.classList.remove('open');
+  document.body.style.overflow = 'auto';
+};
+
+menuBackdrop.addEventListener('click', closeMenu);
+
 mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    menuToggle.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = 'auto';
-  });
+  link.addEventListener('click', closeMenu);
 });
 </script>
 </body>
