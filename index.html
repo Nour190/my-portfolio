@@ -11,20 +11,20 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:      #F7F8FC;
-    --bg2:     #EEF1F8;
-    --indigo:  #4338CA;
-    --indigo2: #6D28D9;
-    --cyan:    #0E7490;
-    --green:   #047857;
-    --amber:   #D97706;
-    --text:    #0C1229;
-    --muted:   #5B6A8A;
-    --border:  rgba(12,18,41,0.10);
-    --glass:   rgba(255,255,255,0.88);
-    --glass2:  rgba(67,56,202,0.07);
-    --shadow:  0 2px 20px rgba(12,18,41,0.08);
-    --r:       14px;
+    --bg:      #FCFBF9; /* Warm happy cream */
+    --bg2:     #F4F3FF; /* Soft happy warm lavender */
+    --indigo:  #6366F1; /* Happy bright indigo */
+    --indigo2: #8B5CF6; /* Happy bright violet */
+    --cyan:    #0EA5E9; /* Happy bright sky-blue */
+    --green:   #10B981; /* Happy bright emerald green */
+    --amber:   #F59E0B; /* Happy warm amber */
+    --text:    #1E1B4B; /* Deep warm navy/plum for soft but rich text */
+    --muted:   #585676; /* Tinted warm muted plum-slate */
+    --border:  rgba(99,102,241,0.08); /* Soft matching border */
+    --glass:   rgba(255,255,255,0.92);
+    --glass2:  rgba(99,102,241,0.05);
+    --shadow:  0 8px 30px rgba(99,102,241,0.04);
+    --r:       16px;
   }
 
   html { scroll-behavior: smooth; }
@@ -46,7 +46,7 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 6vw; height: 68px;
-    background: rgba(248,250,252,0.88);
+    background: rgba(252,251,249,0.88);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
   }
@@ -75,7 +75,7 @@
     position: relative; min-height: 100vh;
     display: flex; align-items: center;
     padding: 0 6vw; overflow: hidden;
-    background: linear-gradient(145deg, #EEF2FF 0%, #F8FAFC 55%, #E0F2FE 100%);
+    background: linear-gradient(135deg, #FFF1F2 0%, #F5F3FF 50%, #ECFDF5 100%);
   }
   #constellation-canvas { position: absolute; inset: 0; pointer-events: none; opacity: 0.45; }
   .hero-inner {
@@ -86,14 +86,17 @@
   }
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: 0.5rem;
-    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 500;
-    color: var(--cyan); letter-spacing: 0.1em; text-transform: uppercase;
-    background: rgba(8,145,178,0.08); border: 1px solid rgba(8,145,178,0.22);
-    padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 600;
+    color: #10B981; letter-spacing: 0.08em; text-transform: uppercase;
+    background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 0.4rem 1rem; border-radius: 100px; margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.06);
   }
   .hero-eyebrow::before {
-    content: ''; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--cyan); animation: pulse 2s ease-in-out infinite;
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+    animation: pulse 1.8s ease-in-out infinite;
   }
   @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(0.8); } }
 
@@ -103,8 +106,15 @@
     line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 1rem; color: var(--text);
   }
   .hero-name span {
-    background: linear-gradient(135deg, var(--indigo2) 0%, var(--cyan) 100%);
+    background: linear-gradient(120deg, #8B5CF6 0%, #D946EF 30%, #0EA5E9 65%, #10B981 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: gradient-flow 6s linear infinite;
+  }
+  @keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
   .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 480px; margin-bottom: 2.5rem; line-height: 1.7; }
   .hero-sub strong { color: var(--text); font-weight: 600; }
@@ -114,9 +124,9 @@
     padding: 0.3rem 0.75rem; border-radius: 6px;
     border: 1px solid var(--border); background: var(--glass); color: var(--muted); letter-spacing: 0.05em;
   }
-  .badge.b-flutter { border-color: rgba(79,70,229,0.28); color: var(--indigo2); background: rgba(79,70,229,0.06); }
-  .badge.b-ai { border-color: rgba(8,145,178,0.28); color: var(--cyan); background: rgba(8,145,178,0.06); }
-  .badge.b-green { border-color: rgba(5,150,105,0.28); color: var(--green); background: rgba(5,150,105,0.06); }
+  .badge.b-flutter { border-color: rgba(99,102,241,0.25); color: var(--indigo2); background: rgba(99,102,241,0.06); }
+  .badge.b-ai { border-color: rgba(14,165,233,0.25); color: var(--cyan); background: rgba(14,165,233,0.06); }
+  .badge.b-green { border-color: rgba(16,185,129,0.25); color: var(--green); background: rgba(16,185,129,0.06); }
 
   .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
   .btn-primary {
@@ -126,7 +136,7 @@
     color: #fff; text-decoration: none; border-radius: 10px;
     font-weight: 600; font-size: 0.9rem;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 18px rgba(79,70,229,0.28);
+    box-shadow: 0 4px 18px rgba(99,102,241,0.2);
   }
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79,70,229,0.38); }
   .btn-secondary {
@@ -335,11 +345,11 @@
   .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
   .tag {
     font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 6px;
-    background: rgba(79,70,229,0.07); border: 1px solid rgba(79,70,229,0.18);
+    background: rgba(139,92,246,0.06); border: 1px solid rgba(139,92,246,0.18);
     color: var(--indigo2); font-weight: 500;
   }
-  .tag.cyan { background: rgba(8,145,178,0.07); border-color: rgba(8,145,178,0.18); color: var(--cyan); }
-  .tag.green { background: rgba(5,150,105,0.07); border-color: rgba(5,150,105,0.18); color: var(--green); }
+  .tag.cyan { background: rgba(14,165,233,0.06); border-color: rgba(14,165,233,0.18); color: var(--cyan); }
+  .tag.green { background: rgba(16,185,129,0.06); border-color: rgba(16,185,129,0.18); color: var(--green); }
 
   /* EXPERIENCE */
   #experience { background: var(--bg); }
