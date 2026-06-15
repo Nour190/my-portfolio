@@ -51,10 +51,13 @@
     border-bottom: 1px solid var(--border);
   }
   .nav-logo {
+    display: flex; align-items: center; gap: 0.5rem;
     font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem;
     letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--indigo2), var(--cyan));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .nav-logo img {
+    width: 32px; height: 32px; border-radius: 50%;
+    object-fit: cover; border: 2px solid var(--border);
   }
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a {
@@ -622,6 +625,7 @@
     .edu-grid { grid-template-columns: 1fr; }
     .project-card.featured { grid-column: 1; grid-template-columns: 1fr; }
     .nav-links { display: none; }
+    nav { flex-direction: row-reverse; }
     
     .menu-toggle { display: flex; }
   }
@@ -629,12 +633,12 @@
     section { padding: 4rem 5vw; }
     nav { padding: 0 5vw; }
     .hero-name { font-size: 2.2rem; }
-    .hero-ctas { flex-wrap: nowrap; gap: 0.4rem; align-items: center; justify-content: center; }
+    .hero-ctas { flex-wrap: wrap; gap: 0.8rem; align-items: center; justify-content: center; }
     .hero-ctas .btn-primary, .hero-ctas .btn-secondary, .hero-ctas .btn-whatsapp {
-      padding: 0.65rem 0.5rem;
-      font-size: 0.72rem;
+      padding: 0.75rem 1.2rem;
+      font-size: 0.8rem;
       white-space: nowrap;
-      flex: 1;
+      flex: 0 0 auto;
       justify-content: center;
     }
     .hero-ctas .btn-whatsapp svg {
@@ -797,14 +801,14 @@
   .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
   .mobile-menu {
-    position: fixed; top: 0; right: 0; bottom: 0;
+    position: fixed; top: 0; left: 0; bottom: 0;
     width: 280px; background: var(--bg);
     z-index: 105; display: flex; flex-direction: column;
     align-items: flex-start; justify-content: flex-start;
     gap: 1.75rem; padding: 6rem 2.5rem 2rem;
-    box-shadow: -10px 0 40px rgba(12,18,41,0.08);
-    border-left: 1px solid var(--border);
-    transform: translateX(100%);
+    box-shadow: 10px 0 40px rgba(12,18,41,0.08);
+    border-right: 1px solid var(--border);
+    transform: translateX(-100%);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .mobile-menu.open { transform: translateX(0); }
@@ -844,7 +848,9 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">NM∙</div>
+  <div class="nav-logo">
+    <img src="assets/profile.jpeg" alt="Nour Eldine" />
+  </div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
