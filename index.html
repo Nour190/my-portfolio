@@ -56,8 +56,9 @@
     letter-spacing: -0.02em;
   }
   .nav-logo img {
-    width: 32px; height: 32px; border-radius: 50%;
-    object-fit: cover; border: 2px solid var(--border);
+    width: 42px; height: 42px; border-radius: 50%;
+    object-fit: cover; border: 2px solid var(--indigo2);
+    box-shadow: 0 2px 8px rgba(99,102,241,0.18);
   }
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a {
@@ -615,9 +616,9 @@
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
   @media (max-width: 900px) {
-    .hero-inner { grid-template-columns: 1fr; gap: 3rem; padding-top: 100px; text-align: left; }
-    .hero-visual { height: 320px; }
-    .phone-stack { transform: scale(0.68); transform-origin: center center; }
+    .hero-inner { grid-template-columns: 1fr; gap: 2rem; padding-top: 100px; text-align: left; }
+    .hero-visual { height: 420px; display: flex; justify-content: center; align-items: center; }
+    .phone-stack { transform: scale(0.82); transform-origin: center center; }
     .hero-sub { margin-left: 0; margin-right: auto; }
     .hero-badges { justify-content: flex-start; }
     .hero-ctas { justify-content: center; }
@@ -814,13 +815,13 @@
   .mobile-menu.open { transform: translateX(0); }
   .mobile-menu a {
     font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem;
-    font-weight: 700; color: var(--text); text-decoration: none;
-    transition: color 0.2s;
+    font-weight: 700; color: #000; text-decoration: none;
+    transition: color 0.2s, padding-left 0.2s;
     width: 100%;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(12,18,41,0.03);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
   }
-  .mobile-menu a:hover { color: var(--indigo); }
+  .mobile-menu a:hover { color: var(--indigo); padding-left: 4px; }
   .mobile-menu .nav-cta {
     margin-top: 1rem;
     padding: 0.75rem 2.2rem; font-size: 1rem;
@@ -828,6 +829,7 @@
     text-align: center;
     border-bottom: none;
   }
+  .mobile-menu .nav-cta:hover { padding-left: 0; }
 
   .menu-backdrop {
     position: fixed; inset: 0;
@@ -839,6 +841,47 @@
     transition: opacity 0.35s ease;
   }
   .menu-backdrop.open { opacity: 1; pointer-events: all; }
+
+  /* WHATSAPP LOADER */
+  @keyframes wa-spin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes wa-fade-in {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .wa-loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1.2rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .wa-loader.visible { opacity: 1; pointer-events: all; }
+  .wa-loader-box {
+    background: #fff; border-radius: 20px;
+    padding: 2.5rem 3rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    animation: wa-fade-in 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .wa-loader-spinner {
+    width: 48px; height: 48px;
+    border: 4px solid rgba(18,140,126,0.15);
+    border-top-color: #128C7E;
+    border-radius: 50%;
+    animation: wa-spin 0.8s linear infinite;
+  }
+  .wa-loader-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 1rem; color: #000;
+  }
+  .wa-loader-sub {
+    font-size: 0.8rem; color: #666; margin-top: -0.5rem;
+  }
 </style>
 </head>
 <body>
@@ -1512,7 +1555,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
         +20 127 371 5298
       </a>
-      <a href="https://wa.me/201273715298" class="contact-link" target="_blank" rel="noopener">
+      <a href="https://wa.me/201273715298" class="contact-link wa-btn" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.504-5.714-1.466L0 24zm6.59-2.535c1.52.901 3.013 1.375 4.831 1.376 5.513 0 9.998-4.488 10.002-10.002.002-2.673-1.037-5.184-2.927-7.076-1.89-1.89-4.405-2.93-7.081-2.93-5.523 0-10.009 4.488-10.013 10.003-.001 1.875.5 3.708 1.45 5.253L1.082 22.91l4.588-1.202c.007-.002.015-.005.023-.007.294-.084.629-.126.954-.236zm12.336-7.39c-.316-.16-1.87-.923-2.158-1.03-.288-.106-.499-.158-.709.158-.21.316-.81.103-1.02.103a.526.526 0 01-.39-.185c-.158-.158-.667-.246-1.272-.786-.47-.42-.787-.938-.879-1.096-.092-.158-.01-.244.07-.321.071-.07.158-.185.237-.278.08-.093.106-.159.158-.266.053-.106.027-.2-.013-.316-.04-.106-.499-1.21-.684-1.656-.18-.439-.379-.38-.52-.38h-.443c-.158 0-.414.059-.63.294-.216.237-.827.809-.827 1.972 0 1.163.846 2.288.964 2.446.118.158 1.664 2.54 4.032 3.56.563.242 1.002.387 1.344.496.565.179 1.08.153 1.486.093.453-.066 1.87-.765 2.133-1.472.262-.708.262-1.315.184-1.442-.079-.127-.288-.184-.604-.344z"/></svg>
         WhatsApp
       </a>
@@ -1919,6 +1962,30 @@ menuBackdrop.addEventListener('click', closeMenu);
 
 mobileMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', closeMenu);
+});
+
+// WHATSAPP LOADER
+const waLoader = document.createElement('div');
+waLoader.className = 'wa-loader';
+waLoader.innerHTML = `
+  <div class="wa-loader-box">
+    <div class="wa-loader-spinner"></div>
+    <div class="wa-loader-text">Opening WhatsApp...</div>
+    <div class="wa-loader-sub">You will be redirected shortly</div>
+  </div>
+`;
+document.body.appendChild(waLoader);
+
+document.querySelectorAll('.btn-whatsapp, .wa-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const url = btn.getAttribute('href');
+    waLoader.classList.add('visible');
+    setTimeout(() => {
+      window.open(url, '_blank', 'noopener');
+      setTimeout(() => waLoader.classList.remove('visible'), 400);
+    }, 1200);
+  });
 });
 </script>
 </body>
